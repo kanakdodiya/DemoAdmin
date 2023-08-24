@@ -3,10 +3,20 @@ const app = express();
 const { engine } = require("express-handlebars");
 const session = require("express-session");
 require('dotenv').config();
-const port = process.env.PORT
-console.log('port: ', port);
+const path = require('path');
+const port = process.env.PORT || 9003;
 
-//Setup Handlebars Library
+//Set Handlebars Framework
+app.set("view engine", "handlebars");
+
+//middleware to serve static files from the "public" directory
+app.use(express.static(__dirname + "/public"));
+
+// Express application to look for views (templates) in the "app/view" directory,
+app.set("views", path.join(__dirname, "app/view"));
+
+
+// Configure Handlebars template engine with custom options and helpers.
 app.engine(
     "handlebars",
     engine({
@@ -21,7 +31,7 @@ app.engine(
     })
 );
 
-//Setup Session Manager
+// Configure session management middleware
 app.use(
     session({
         secret: process.env.SESSION_SECRET,
@@ -30,8 +40,14 @@ app.use(
     })
 );
 
+// Mount the authentication routes
+const authRoute = require("./app/routes/authRoute");
+app.use("/", authRoute);
 
-app.set("port", process.env.PORT);
+
+
+app.set("port", process.env.PORT || 9003);
+
 
 app.listen(port, "0.0.0.0", () => {
     console.log("Server is running on port: " + port);
