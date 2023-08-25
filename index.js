@@ -63,9 +63,12 @@ app.use(async function (req, res, next) {
 });
 
 // Mount the authentication routes
-const authRoute = require("./app/routes/authRoute");
-app.use("/", authRoute);
+// const authRoute = require("./app/routes/authRoute");
+// app.use("/", authRoute);
+// const dashboardRoute = require('./app/routes/dashboardRoute');
+// app.use('/dashboard',dashboardRoute);
 
+require('./app/config/routeConfig')(app)
 
 // Set up the port number for the server to listen on
 app.set("port", process.env.PORT || 9003);
