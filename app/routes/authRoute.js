@@ -20,6 +20,8 @@ module.exports = (app) => {
   router.get("/register", authController.register);
   router.post("/register", authController.register_action);
   router.get("/forgot-password", authController.forgotPassword);
+  router.post("/forgot-password-action", authController.forgotPassword_action);
+
 
   app.use("/",router)
 };
