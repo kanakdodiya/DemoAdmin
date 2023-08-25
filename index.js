@@ -6,9 +6,11 @@ require('dotenv').config();
 const path = require('path');
 const port = process.env.PORT || 9003;
 const mongoose = require('mongoose');
+const flash = require("express-flash");
+
 
 //Connect to MongoDB 
- require('./app/config/databaseConfig')();
+require('./app/config/databaseConfig')();
 
 //Set Handlebars Framework
 app.set("view engine", "handlebars");
@@ -35,6 +37,12 @@ app.engine(
     })
 );
 
+// Middleware to parse incoming request bodies with URL-encoded payloads
+app.use(express.urlencoded({
+    extended: true
+}));
+
+
 // Configure session management middleware
 app.use(
     session({
@@ -44,12 +52,22 @@ app.use(
     })
 );
 
+// Middleware for handling flash messages
+app.use(flash());
+
+//In Express, res.locals is an object that provides a way to pass data from your server-side code (middleware, route handlers, etc.) to your view templates (like Handlebars, EJS, Pug, etc.)
+app.use(async function (req, res, next) {
+    res.locals.session = req.session;
+    res.locals.sessionFlash = req.flash();
+    next();
+});
+
 // Mount the authentication routes
 const authRoute = require("./app/routes/authRoute");
 app.use("/", authRoute);
 
 
-
+// Set up the port number for the server to listen on
 app.set("port", process.env.PORT || 9003);
 
 
