@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 
 exports.index = async (req, res) => {
     if (req.session.email) {
-        res.redirect()
+        res.redirect('/dashboard')
     } else {
         res.render("../view/auth/auth-login", {})
     }
@@ -96,5 +96,9 @@ exports.register_action = async (req, res) => {
 
 
 exports.forgotPassword = async (req, res) => {
+    res.render("../view/auth/auth-forgot-password", {})
+}
+
+exports.forgotPassword_action = async (req, res) => {
     res.render("../view/auth/auth-forgot-password", {})
 }
