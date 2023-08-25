@@ -28,7 +28,7 @@ exports.login_action = async (req, res) => {
             req.session.user = userData.username;
             req.session.email = userData.email;
             req.session.userId = userData._id;
-            // res.redirect('/dashboard');
+            return res.redirect('/dashboard');
         } else {
             req.flash('error', 'Incorrect password');
             return res.redirect('/');
