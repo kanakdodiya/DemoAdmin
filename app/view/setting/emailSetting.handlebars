@@ -1,0 +1,78 @@
+<div class="row match-height">
+    <div class="col-12 mt-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Email Settings</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" method="post" action="/setting/store-data">
+                        <div class="row">
+                            <div class="col-md-6  col-12">
+                                <div class="form-group">
+                                    <label for="admin-email">Administrator Email Address</label>
+                                    <input type="text" id="admin-email" class="form-control"
+                                        placeholder="Administrator Email Address" value="{{data.vAdminEmailAddress}}" name="adminEmail" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                                     >
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="email-protocol">Email Protocol</label>
+                                    <input type="text" id="email-protocol" class="form-control"
+                                        value="{{data.vEmailProtocol}}" placeholder="Email Protocol" name="emailProtocol"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="server-host">SMTP Server Host</label>
+                                    <input type="text" id="server-host" class="form-control"
+                                        value="{{data.vSMTPServerHost}}" placeholder="SMTP Server Host" name="serverHost"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="server-pass">SMTP Server Password</label>
+                                    <input type="text" id="server-pass" class="form-control"
+                                        value="{{data.vSMTPServerPassword}}" placeholder="SMTP Server Password" name="serverPass"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="server-port">SMTP Server Port</label>
+                                    <input type="number" id="server-port" class="form-control"
+                                        value="{{data.iSMTPServerPort}}" placeholder="SMTP Server Port" name="serverPort"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="server-username">SMTP Server User name</label>
+                                    <input type="text" id="server-username" class="form-control"
+                                        value="{{data.vSMTPServerUsername}}" placeholder="SMTP Server User name" name="serverUsername"
+                                       >
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="support-email">Support Email Address</label>
+                                    <input type="text" id="support-email" class="form-control"
+                                        value="{{data.vSupportEmail}}" placeholder="Support Email Address" name="supportEmail" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                                       >
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content">
+                            <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

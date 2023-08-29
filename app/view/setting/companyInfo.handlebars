@@ -1,0 +1,121 @@
+<div class="row match-height">
+    <div class="col-12 mt-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Company Information</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" method="post" action="/setting/store-data" enctype = "multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-6  col-12">
+                                <div class="form-group">
+                                    <label for="company-address">Company address</label>
+                                    <input type="text" id="company-address" class="form-control"
+                                        placeholder="Company address" value="{{data.vCompanyAddress}}" name="companyAddress"
+                                     >
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-des">Company Description</label>
+                                    <input type="text" id="company-des" class="form-control"
+                                        value="{{data.vCompanyDescription}}" placeholder="Company Description" name="companyDescription"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-email">Company Email ID</label>
+                                    <input type="text" id="company-email" class="form-control"
+                                        value="{{data.vCompanyEmailId}}" placeholder="Company Email ID" name="companyEmail" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-name">Company Name</label>
+                                    <input type="text" id="company-name" class="form-control"
+                                        value="{{data.vCompanyName}}" placeholder="Company Name" name="companyName"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-favicon">Company Favicon</label>
+                                    <input type="file" id="company-favicon" class="form-control"
+                                        value="{{data.vCompanyFavicon}}" placeholder="Company Favicon" name="companyFavicon"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-logo">Company Logo</label>
+                                    <input type="file" id="company-logo" class="form-control"
+                                        value="{{data.vCompanyLogo}}" placeholder="Company Logo" name="companyLogo"
+                                       >
+                                </div>
+                            </div>
+
+                            {{#if data.vCompanyFavicon}}
+                             <div class="col-md-6 col-12" style="margin-bottom: 10px">
+                                   <img src="http://localhost:9003/{{data.vCompanyFavicon}}" height="100" width="100" />
+                            </div>
+                            {{/if}}
+
+                            {{#if data.vCompanyLogo}}
+                             <div class="col-md-6 col-12" style="margin-bottom: 10px">
+                                  <img src="http://localhost:9003/{{data.vCompanyLogo}}" height="100" width="200"/>
+                            </div>
+                            {{/if}}
+                            
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-number">Company Number</label>
+                                    <input type="number" id="company-number" class="form-control"
+                                        value="{{data.iCompanyNumber}}" placeholder="Company Number" name="companyNumber"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="company-website">Company Website</label>
+                                    <input type="text" id="company-website" class="form-control"
+                                        value="{{data.vCompanyWebsite}}" placeholder="Company Website" name="companyWebsite"
+                                       >
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="footer-logo">Footer Logo</label>
+                                    <input type="file" id="footer-logo" class="form-control"
+                                        value="{{data.vFooterLogo}}" placeholder="Footer Logo" name="footerLogo"
+                                       >
+                                </div>
+                            </div>
+                               <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="copyright-text">Copyright text</label>
+                                    <input type="text" id="copyright-text" class="form-control"
+                                        value="{{data.vCopyrightText}}" placeholder="Copyright text" name="copyrightText"
+                                       >
+                                </div>
+                            </div>
+                             {{#if data.vFooterLogo}}
+                             <div class="col-md-6 col-12">
+                                  <img src="http://localhost:9003/{{data.vFooterLogo}}" height="100" width="100"/>
+                            </div>
+                            {{/if}}
+
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content">
+                            <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

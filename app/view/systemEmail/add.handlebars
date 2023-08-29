@@ -14,73 +14,69 @@
                             <div class="col-md-6  col-12">
                                 <div class="form-group">
                                     <label for="first-name-column">Email Code</label>
-                                    <input type="text" id="first-name-column" class="form-control"
-                                        placeholder="Enter Email Code" value="" name="username"
+                                    <input type="text" id="vEmailCode" class="form-control"
+                                        placeholder="Enter Email Code" value="" name="vEmailCode"
                                         data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="last-name-column">Email Title</label>
-                                    <input type="email" id="last-name-column" class="form-control" value=""
-                                        placeholder="Enter Email Title" name="email" data-parsley-required="true">
+                                    <input type="text" id="vEmailTitle" class="form-control" value=""
+                                        placeholder="Enter Email Title" name="vEmailTitle" data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3 col-12">
                                 <div class="form-group">
                                     <label for="password">From Name</label>
-                                    <input type="test" id="password" class="form-control" placeholder="Enter From Name"
-                                        name="password" data-parsley-required="true">
+                                    <input type="test" id="vFromName" class="form-control" placeholder="Enter From Name"
+                                        name="vFromName" data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3 col-12">
                                 <div class="form-group">
                                     <label for="password">From Email</label>
-                                    <input type="test" id="password" class="form-control" placeholder="Enter From Email"
-                                        name="password" data-parsley-required="true">
+                                    <input type="email" id="vFromEmail" class="form-control"
+                                        placeholder="Enter From Email" name="vFromEmail" data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3 col-12">
                                 <div class="form-group">
                                     <label for="password">Cc Email</label>
-                                    <input type="test" id="password" class="form-control" placeholder="Enter Cc Email"
-                                        name="password" data-parsley-required="true">
+                                    <input type="test" id="vCcEmail" class="form-control" placeholder="Enter Cc Email"
+                                        name="vCcEmail" data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3 col-12">
                                 <div class="form-group">
                                     <label for="password">Bcc Email</label>
-                                    <input type="test" id="password" class="form-control" placeholder="Enter Bcc Email"
-                                        name="password" data-parsley-required="true">
+                                    <input type="test" id="vBccEmail" class="form-control" placeholder="Enter Bcc Email"
+                                        name="vBccEmail" data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3 col-12">
                                 <div class="form-group">
                                     <label for="password">Email Subject</label>
-                                    <input type="test" id="password" class="form-control"
-                                        placeholder="Enter Email Subject" name="password" data-parsley-required="true"
-                                        data-parsley-equalto="#confirmPassword"
-                                        data-parsley-equalto-message="Both Password Should Be Same"
-                                        data-parsley-minlength='6' data-parsley-maxlength='15'>
+                                    <input type="test" id="vEmailSubject" class="form-control"
+                                        placeholder="Enter Email Subject" name="vEmailSubject"
+                                        data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-6 mt-3 col-12">
                                 <div class="form-group">
                                     <label for="confirmPassword">Internal Message</label>
-                                    <input type="text" id="confirmPassword" class="form-control" name="confirmPassword"
-                                        placeholder="Enter Internal Message" data-parsley-required="true"
-                                        data-parsley-minlength='6' data-parsley-maxlength='15'
-                                        data-parsley-equalto="#password"
-                                        data-parsley-equalto-message="Both Password Should Be Same">
+                                    <input type="text" id="tInternalMessage" class="form-control"
+                                        name="tInternalMessage" placeholder="Enter Internal Message"
+                                        data-parsley-required="true">
                                 </div>
                             </div>
                             <div class="col-md-3  mt-3 col-12">
                                 <div class="form-group">
                                     <label for="email-id-column">Status</label>
-                                    <select class="form-select form-select mb-3" name="status"
+                                    <select class="form-select form-select mb-3" id="eStatus" name="eStatus"
                                         aria-label=".form-select-lg example">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
                                     </select>
                                 </div>
                             </div>
@@ -90,26 +86,24 @@
                                     <div class="ivu-form-item-content">
                                         <div class="ivu-input-wrapper ivu-input-wrapper-default ivu-input-type-text">
                                             <textarea placeholder="Enter Email Message"
-                                                class="ivu-input ivu-input-default" name="tEmailMessage"
-                                                id="tEmailMessage"></textarea>
-                                            <div class="text-danger" id="tEmailMessage_error" style="display: none;">
-                                                Please enter email message
-                                            </div>
+                                                class="ivu-input ivu-input-default" data-parsley-required="true"
+                                                name="tEmailMessage" id="tEmailMessage"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="col-12 mt-3 d-flex justify-content-center">
-                                <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
-                                <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
-                            </div>
                         </div>
-                    </form>
+
+                        <div class="col-12 mt-3 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
+                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                        </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script src="/assets/vendors/tinymce/tinymce.min.js"></script>
 <script src="/assets/vendors/tinymce/plugins/code/plugin.min.js"></script>

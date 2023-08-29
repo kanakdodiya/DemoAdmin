@@ -1,0 +1,46 @@
+<div class="row match-height">
+    <div class="col-12 mt-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">General Settings</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" method="post" action="/setting/store-data">
+                        <div class="row">
+                            <div class="col-md-6  col-12">
+                                <div class="form-group">
+                                    <label for="site-title">Site Control Panel Title</label>
+                                    <input type="text" id="site-title" class="form-control"
+                                        placeholder="Site Control Panel Title" value="{{data.vContrlPanelTitle}}" name="siteTitle"
+                                     >
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="display-msg">Message to be disaplyed</label>
+                                    <input type="text" id="display-msg" class="form-control"
+                                        value="{{data.vMessageToDisplay}}" placeholder="Message to be disaplyed" name="msgToBeDisplay"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="item-per-page">Item per page</label>
+                                    <input type="number" id="item-per-page" class="form-control"
+                                        value="{{data.iItemPerPage}}" placeholder="Item per page" name="itemPerPage"
+                                       >
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content-left">
+                            <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

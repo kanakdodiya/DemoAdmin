@@ -33,14 +33,6 @@ const SystemEmailSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    tSmsMessage: {
-        type: String,
-        required: true,
-    },
-    tInternalMessage: {
-        type: String,
-        required: true,
-    },
     eStatus: {
         type: String,
         enum: ['Active', 'Inactive'],

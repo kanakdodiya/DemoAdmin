@@ -1,0 +1,70 @@
+<div class="row match-height">
+    <div class="col-12 mt-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Social Settings</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" method="post" action="/setting/store-data">
+                        <div class="row">
+                            <div class="col-md-6  col-12">
+                                <div class="form-group">
+                                    <label for="fb-url">Facebook Profile URL</label>
+                                    <input type="text" id="fb-url" class="form-control"
+                                        placeholder="Facebook Profile URL" value="{{data.vFacebookUrl}}" name="fbUrl"
+                                     >
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="insta-url">Instagram Profile URL</label>
+                                    <input type="text" id="insta-url" class="form-control"
+                                        value="{{data.vInstagramUrl}}" placeholder="Instagram Profile URL" name="instaUrl"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="linkedin-url">Linked URL</label>
+                                    <input type="text" id="linkedin-url" class="form-control"
+                                        value="{{data.vLinkedinUrl}}" placeholder="Linked URL" name="linkedinUrl"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="pinterest-url">Pinterest URL</label>
+                                    <input type="text" id="pinterest-url" class="form-control"
+                                        value="{{data.vPinterestUrl}}" placeholder="Pinterest URL" name="pinterestUrl"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="twitter-url">Twitter Profile URL</label>
+                                    <input type="text" id="twitter-url" class="form-control"
+                                        value="{{data.vTwitterUrl}}" placeholder="Twitter Profile URL" name="twitterUrl"
+                                       >
+                                </div>
+                            </div>
+                             <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="youtube-url">YouTube</label>
+                                    <input type="text" id="youtube-url" class="form-control"
+                                        value="{{data.vYoutubeUrl}}" placeholder="YouTube" name="youtubeUrl"
+                                       >
+                                </div>
+                            </div>
+                        
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content">
+                            <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
