@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
-    id: {
-        type: String
-    },
     vUserName: {
         type: String,
-        required: true
+        required: true,
+        unique: true 
     },
     vEmail: {
         type: String,
-        required: true
+        required: true,
+        unique: true 
     },
     iContact: {
         type: Number,
-        required: true
+        required: true,
+        unique: true 
     },
     vAvatar: {
         type: String

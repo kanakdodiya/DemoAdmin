@@ -130,6 +130,13 @@ exports.register_action = async (req, res) => {
             // return res.status(400).send(errors);
         }
 
+        // For Other Errors
+        if (Object.keys(errors).length === 0) {
+            console.error('Other error:', err);
+            req.flash('error', 'Something Went Wrong');
+        }
+
+
         Object.keys(errors).forEach(key => {
             if (errors[key]) {
                 console.log('errors[key]: ', errors[key]);
@@ -137,15 +144,8 @@ exports.register_action = async (req, res) => {
             }
         });
 
-        // if (newAdmin == 'true') {
-        //     return res.redirect('/admin');
-        // } else {
-        //     res.redirect('/login');
-        // }
         const redirectPath = newAdmin === 'true' ? '/admin' : '/login';
         return res.redirect(redirectPath);
-
-
     }
 }
 
@@ -157,7 +157,6 @@ exports.forgotPassword = async (req, res) => {
 exports.forgotPassword_action = async (req, res) => {
     res.render("../view/auth/auth-forgot-password", {})
 }
-
 
 exports.logout = (req, res) => {
     if (req.session.email) {

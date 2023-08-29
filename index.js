@@ -7,6 +7,8 @@ const path = require('path');
 const port = process.env.PORT || 9003;
 const mongoose = require('mongoose');
 const flash = require("express-flash");
+const fileupload = require('express-fileupload');
+
 
 
 //Connect to MongoDB 
@@ -14,6 +16,10 @@ require('./app/config/databaseConfig')();
 
 //Set Handlebars Framework
 app.set("view engine", "handlebars");
+app.use(fileupload());
+
+
+app.use(express.static(__dirname + "/app/upload"));
 
 //middleware to serve static files from the "public" directory
 app.use(express.static(__dirname + "/public"));
@@ -56,7 +62,7 @@ app.use(async function (req, res, next) {
 app.use(express.urlencoded({
     extended: true
 }));
-
+app.use(express.json());
 
 // Configure session management middleware
 app.use(
