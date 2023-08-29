@@ -21,6 +21,7 @@ module.exports = (app) => {
   router.post("/register", authController.register_action);
   router.get("/forgot-password", authController.forgotPassword);
   router.post("/forgot-password-action", authController.forgotPassword_action);
+  router.get("/logout", authController.logout);
 
 
   app.use("/",router)

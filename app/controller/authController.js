@@ -1,5 +1,5 @@
-const userModel = require("../model/authModel")
-const bcrypt = require('bcrypt')
+const userModel = require("../model/authModel");
+const bcrypt = require('bcrypt');
 
 exports.index = async (req, res) => {
     if (req.session.email) {
@@ -28,13 +28,14 @@ exports.login_action = async (req, res) => {
             req.session.user = userData.username;
             req.session.email = userData.email;
             req.session.userId = userData._id;
+            req.flash('success', 'Login Successfully....!');
             return res.redirect('/dashboard');
         } else {
             req.flash('error', 'Incorrect password');
             return res.redirect('/');
         }
     } catch (error) {
-        console.log('error: ', error.message);
+        console.error('Error during login:', error.message);
         req.flash('error', 'An error occurred during login');
         res.redirect('/');
     }
@@ -47,26 +48,71 @@ exports.register = async (req, res) => {
 
 exports.register_action = async (req, res) => {
     try {
-        const { username, email, password, confirmPassword } = req.body;
-        if (password) {
-            if (password == confirmPassword) {
-                const user = await userModel.create({
-                    username,
-                    email,
-                    password,
-                });
-                req.flash('success', 'User registered successfully');
-                return res.redirect('/login'); // Redirect to login page
+        if (req.body.iAdminId) {
+            const { password, confirmPassword, username, email, status, iAdminId } = req.body;
+            let UPDATE_QUERY = {}
+            if (password == '' || confirmPassword == '') {
+                console.log('without pass');
+                UPDATE_QUERY = {
+                    "$set": {
+                        username,
+                        email,
+                        status
+                    }
+                }
             } else {
-                req.flash('error', 'Passwords do not match');
+                console.log('with pass');
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(req.body.password, salt);
+                UPDATE_QUERY = {
+                    "$set": {
+                        username,
+                        email,
+                        password: hashedPassword,
+                        status
+                    }
+                }
+            }
+
+            const updatedData = await userModel.findOneAndUpdate(
+                { _id: iAdminId },
+                UPDATE_QUERY,
+                { new: true } // To return the updated document
+            );
+
+            req.flash('success', 'Admin Update successfully');
+            return res.redirect('/admin');
+
+        } else {
+            const { username, email, password, confirmPassword, status, newAdmin } = req.body;
+            if (password) {
+                if (password == confirmPassword) {
+                    const user = await userModel.create({
+                        username,
+                        email,
+                        password,
+                        status
+                    });
+                    req.flash('success', 'User registered successfully');
+
+                    const redirectPath = newAdmin === 'true' ? '/admin' : '/login';
+                    return res.redirect(redirectPath);
+
+                } else {
+                    req.flash('error', 'Passwords do not match');
+
+                    const redirectPath = newAdmin === 'true' ? '/admin' : '/register';
+                    return res.redirect(redirectPath);
+                }
+            } else {
+                req.flash('error', 'Please Try Again');
                 return res.redirect('/register');
             }
-        } else {
-            req.flash('error', 'Please Try Again');
-            return res.redirect('/register');
         }
+
     } catch (err) {
         let errors = {};
+        let newAdmin = req.body.newAdmin
 
         //For Validation Errors
         if (err.name === "ValidationError") {
@@ -86,11 +132,20 @@ exports.register_action = async (req, res) => {
 
         Object.keys(errors).forEach(key => {
             if (errors[key]) {
+                console.log('errors[key]: ', errors[key]);
                 req.flash('error', errors[key]);
             }
         });
 
-        res.redirect('/register');
+        // if (newAdmin == 'true') {
+        //     return res.redirect('/admin');
+        // } else {
+        //     res.redirect('/login');
+        // }
+        const redirectPath = newAdmin === 'true' ? '/admin' : '/login';
+        return res.redirect(redirectPath);
+
+
     }
 }
 
@@ -102,3 +157,25 @@ exports.forgotPassword = async (req, res) => {
 exports.forgotPassword_action = async (req, res) => {
     res.render("../view/auth/auth-forgot-password", {})
 }
+
+
+exports.logout = (req, res) => {
+    if (req.session.email) {
+        try {
+            setTimeout(() => {
+                req.session.destroy((error) => {
+                    if (error) {
+                        req.flash('error', 'Something went wrong while logging out');
+                    }
+                    res.redirect('/');
+                });
+            }, 1000);
+        } catch (error) {
+            req.flash('error', 'Something went wrong during logout');
+            res.redirect('/');
+        }
+    } else {
+        console.log('No session found');
+        res.redirect('/');
+    }
+};

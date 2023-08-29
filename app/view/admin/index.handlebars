@@ -1,0 +1,73 @@
+<header class="mb-3">
+    <a href="#" class="burger-btn d-block d-xl-none">
+        <i class="bi bi-justify fs-3"></i>
+    </a>
+</header>
+
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>DataTable</h3>
+                <p class="text-subtitle text-muted">For user to check they list</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">DataTable</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <section class="section">
+        <div class="card">
+            <div class="card-header">
+                Simple Datatable
+            </div>
+            <div class="card-body" style="text-align: center;">
+                <table class="table table-striped" id="table1">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center"> Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each userData as |value key| }}
+                        <tr>
+                            <td>{{value.username}}</td>
+                            <td>{{value.email}}</td>
+                            <td>
+                                <span
+                                    class="badge {{#if_equal value.status 'active'}}bg-success {{else }} bg-danger{{/if_equal}}">{{value.status}}</span>
+                            </td>
+                            <td>
+                                <a href="/admin/add" class="btn btn-sm btn-primary me-3">Create</a>
+                                <a href="/admin/edit/{{value._id}}" class="btn btn-sm btn-warning me-3"></i>Edit</a>
+                                <a href="/admin/delete/{{value._id}}" class="btn btn-sm btn-danger"></i>Delete</a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+<script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+
+<script src="assets/vendors/simple-datatables/simple-datatables.js"></script>
+<script>
+    // Simple Datatable
+    let table1 = document.querySelector('#table1');
+    let dataTable = new simpleDatatables.DataTable(table1);
+</script>
+
+<script src="assets/js/mazer.js"></script>

@@ -1,0 +1,74 @@
+<div class="row match-height">
+    <div class="col-12 mt-10">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Create Admin</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <form class="form" method="post" action="/register" data-parsley-validate>
+                        <input type="hidden" name="newAdmin" value="true">
+                        <input type="hidden" name="iAdminId" id="iAdminId" value="{{adminData._id}}">
+
+                        <div class="row">
+                            <div class="col-md-6  col-12">
+                                <div class="form-group">
+                                    <label for="first-name-column">Username</label>
+                                    <input type="text" id="first-name-column" class="form-control"
+                                        placeholder="Admin Name" value="{{adminData.username}}" name="username"
+                                        data-parsley-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <div class="form-group">
+                                    <label for="last-name-column">Email</label>
+                                    <input type="email" id="last-name-column" class="form-control"
+                                        value="{{adminData.email}}" placeholder="Email" name="email"
+                                        data-parsley-required="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 col-12">
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="test" id="password" class="form-control" placeholder="Password"
+                                        name="password" {{#if adminData}} {{else}}data-parsley-required="true" {{/if}}
+                                        data-parsley-equalto="#confirmPassword"
+                                        data-parsley-equalto-message="Both Password Should Be Same"
+                                        data-parsley-minlength='6' data-parsley-maxlength='15'>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mt-3 col-12">
+                                <div class="form-group">
+                                    <label for="confirmPassword">confirm Password</label>
+                                    <input type="text" id="confirmPassword" class="form-control" name="confirmPassword"
+                                        placeholder="confirm Password" {{#if adminData}}
+                                        {{else}}data-parsley-required="true" {{/if}} data-parsley-minlength='6'
+                                        data-parsley-maxlength='15' data-parsley-equalto="#password"
+                                        data-parsley-equalto-message="Both Password Should Be Same">
+                                </div>
+                            </div>
+                            <div class="col-md-6  mt-3 col-12">
+                                <div class="form-group">
+                                    <label for="email-id-column">Status</label>
+                                    <select class="form-select form-select mb-3" name="status"
+                                        aria-label=".form-select-lg example">
+                                        <option value="active" {{#if_equal adminData.status 'active'
+                                            }}selected{{/if_equal}}>Active</option>
+                                        <option value="inactive" {{#if_equal adminData.status 'inactive'
+                                            }}selected{{/if_equal}}>Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary me-3 mb-1">Submit</button>
+                            <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

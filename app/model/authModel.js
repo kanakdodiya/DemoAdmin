@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: [true, "Password is a required field"],
-        select:false,
+        select: false,
         validate(value) {
             if (!validator.isLength(value, { min: 6, max: 15 })) {
                 throw Error("Password length should be between 6 and 15 characters");
@@ -31,6 +31,11 @@ const userSchema = new mongoose.Schema({
             }
 
         }
+    },
+    status: {
+        type: String,
+        enum: ['active', 'inactive'],
+        default: 'active' // Set a default value if needed
     }
 }, {
     timestamps: true, // Enable timestamps

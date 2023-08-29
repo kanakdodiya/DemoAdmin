@@ -37,6 +37,21 @@ app.engine(
     })
 );
 
+app.use(async function (req, res, next) {
+    try {
+        //get url
+        let current_route = req.originalUrl.replace(/\?.*$/, '').split("/");
+        res.locals.route = current_route[1];
+        res.locals.route2 = current_route[2];
+        res.locals.route3 = current_route[3];
+        next();
+    } catch (error) {
+        console.log(error);
+        res.redirect('/');
+    }
+});
+
+
 // Middleware to parse incoming request bodies with URL-encoded payloads
 app.use(express.urlencoded({
     extended: true
