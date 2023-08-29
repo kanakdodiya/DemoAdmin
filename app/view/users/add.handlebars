@@ -1,0 +1,90 @@
+<!-- // Basic multiple Column Form section start -->
+<section id="multiple-column-form">
+    <div class="row match-height">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title" style="margin-top: 10px">
+                        {{#if edit}}
+                        Edit User
+                        {{else}}
+                        Add User
+                        {{/if}}
+                    </h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form" action="/users/add-action" method="POST" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6 col-12">
+                                    <input type="text" value="{{data._id}}" name="id" hidden />
+                                    <div class="form-group">
+                                        <label for="name-column">
+                                            User Name
+                                        </label>
+                                        <input type="text" id="username" class="form-control" placeholder="User name"
+                                            name="vUserName" value="{{data.vUserName}}"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="email">
+                                            Email
+                                        </label>
+                                        <input type="text" id="email" class="form-control"
+                                            placeholder="Ex: john@gmail.com" name="vEmail" value="{{data.vEmail}}"
+                                            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="phone">
+                                            Contact no.
+                                        </label>
+                                        <input type="text" id="phone" class="form-control" placeholder="Phone"
+                                            name="iContact" value="{{data.iContact}}" required />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="avatar">
+                                            Avatar
+                                        </label>
+                                        <input type="file" name="avatar" class="form-control" id="avatar"
+                                            value="{{data.vAvatar}}" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="email-id-column">
+                                            Status
+                                        </label>
+                                        <fieldset class="form-group">
+                                            <select class="form-select" id="inputGroupSelect01" name="eStatus">
+                                                <option value="Active" {{#if_equal data.eStatus 'Active' }} selected
+                                                    {{/if_equal}}>Active</option>
+                                                <option value="Inactive" {{#if_equal data.eStatus 'Inactive' }} selected
+                                                    {{/if_equal}}>Inactive</option>
+                                            </select>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                                <div class="col-12 d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary me-1 mb-1">
+                                        Submit
+                                    </button>
+                                    <button type="reset" class="btn btn-light-secondary me-1 mb-1">
+                                        Reset
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+</script>

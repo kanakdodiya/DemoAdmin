@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
     username: {
         type: String,
         required: [true, 'Username is required'],
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
 });
 
 
-userSchema.pre('save', async function (next) {
+adminSchema.pre('save', async function (next) {
     // Only hash the password if it's modified or new
     if (!this.isModified('password')) {
         return next();
@@ -62,6 +62,6 @@ userSchema.pre('save', async function (next) {
     }
 });
 
-const User = mongoose.model('users', userSchema);
+const User = mongoose.model('admin', adminSchema);
 
 module.exports = User;
