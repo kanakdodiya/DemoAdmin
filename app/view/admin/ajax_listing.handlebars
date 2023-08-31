@@ -1,8 +1,8 @@
 {{#each adminData as |value key|}}
 <tr>
     <td>
-        <input type="checkbox" class="form-check-input form-check-primary form-check-glow" name="customCheck"
-            id="checkboxSize2" data-id="{{value._id}}">
+        <input type="checkbox" class="form-check-input form-check-primary form-check-glow checkboxall" name="iAdminId[]"
+            id="checkboxSize2 iAdminId_{{value._id}}" value="{{value._id}}">
     </td>
     <td>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuh6JcFny3qf5q_JW-L6mAXznVP0phQz00rA&usqp=CAU"
@@ -12,15 +12,15 @@
     <td>{{value.email}}</td>
     <td class="text-bold-500">{{value.phone}}</td>
     <td>
-        {{#if_equal value.eStatus 'Active'}}
+        {{#if_equal value.status 'active'}}
         <span class="badge bg-success">Active</span>
         {{/if_equal}}
-        {{#if_equal value.eStatus 'Inactive'}}
+        {{#if_equal value.status 'inactive'}}
         <span class="badge bg-danger">Inactive</span>
         {{/if_equal}}
     </td>
     <td>
-        <a href="/users/edit-user/{{value._id}}" style="color: #46484e">
+        <a href="/admin/edit/{{value._id}}" style="color: #46484e">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                 class="bi bi-pencil-square" viewBox="0 0 16 16" style="height: 20px; width: 20px">
                 <path
