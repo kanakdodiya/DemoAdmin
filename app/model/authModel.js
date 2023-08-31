@@ -18,6 +18,12 @@ const adminSchema = new mongoose.Schema({
             }
         }
     },
+    image:{
+        type:String
+    },
+    phone:{
+        type:Number
+    },
     password: {
         type: String,
         required: [true, "Password is a required field"],
