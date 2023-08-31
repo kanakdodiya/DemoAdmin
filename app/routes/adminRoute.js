@@ -5,6 +5,7 @@ module.exports = (app) => {
 
   
     router.get("/", adminController.index);
+    router.post("/ajax_listing", adminController.ajax_listing);
     router.get("/add", adminController.add);
     router.get("/edit/:iAuthId", adminController.edit);
     router.get("/delete/:iAuthId", adminController.delete);

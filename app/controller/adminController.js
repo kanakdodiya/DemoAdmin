@@ -18,6 +18,26 @@ exports.index = async (req, res) => {
 
 };
 
+exports.ajax_listing = async (req,res) => {
+    if(req.session.email){
+        try {
+            console.log('userData: ');
+            let adminData = await authModel.find();
+
+            res.render("../view/admin/ajax_listing", {
+                layout: false,
+                adminData: adminData,
+                // iAgentId:req.session.userid
+            });
+            
+        } catch (error) {
+            console.log('error: ', error);
+        }
+    }else{
+        res.status(401).send("Unauthorized")
+    }
+}
+
 
 exports.add = async (req, res) => {
     if (req.session.email) {
