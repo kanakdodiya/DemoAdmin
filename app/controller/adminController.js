@@ -3,11 +3,9 @@ const authModel = require('../model/authModel')
 exports.index = async (req, res) => {
     if (req.session.email) {
         try {
-            let userData = await authModel.find({}).select('username email status')
             is_layout = true;
             res.render("../view/admin/index", {
                 is_layout: is_layout,
-                userData: userData
             });
         } catch (error) {
             console.log('error: ', error);
@@ -15,13 +13,12 @@ exports.index = async (req, res) => {
     } else {
         res.redirect("/");
     }
-
 };
 
 exports.ajax_listing = async (req,res) => {
     if(req.session.email){
         try {
-            console.log('userData: ');
+            // throw new Error("hello");
             let adminData = await authModel.find();
 
             res.render("../view/admin/ajax_listing", {
@@ -31,7 +28,11 @@ exports.ajax_listing = async (req,res) => {
             });
             
         } catch (error) {
-            console.log('error: ', error);
+            console.log('error: ');
+            return res.status(500).send({
+                message: 'error!'
+             });
+             
         }
     }else{
         res.status(401).send("Unauthorized")
