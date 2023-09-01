@@ -126,12 +126,12 @@ module.exports = {
     //     var data = moment(value).fromNow();
     //     return data;
     // },
-    // if_pagination: function (val1, val2, options) {
-    //     if (val1 < val2) {
-    //         return options.fn(this);
-    //     }
-    //     return options.inverse(this);
-    // },
+    if_pagination: function (val1, val2, options) {
+        if (val1 < val2) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    },
     // dateFormate: function (date, format) {
     //     var newDate = new Date(date);
     //     var fullDate = moment(newDate).format(format);

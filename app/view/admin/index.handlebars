@@ -23,9 +23,9 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
                         <input type="text" class="form-control rounded me-2" placeholder="Search" aria-label="Search"
-                            aria-describedby="button-addon2">
-                        <a href="#" class="btn me-2 rounded btn-primary">Add new</a>
-                        <a href="#" class="btn rounded btn-danger">Multi delete</a>
+                            aria-describedby="button-addon2" id="search-input">
+                        <a href="/admin/add" class="btn me-2 rounded btn-primary">Add new</a>
+                        <a href="#" class="btn rounded btn-danger" id="delete_btn">Multi delete</a>
                     </div>
 
                 </nav>
@@ -69,6 +69,17 @@
     </section>
     <!-- Hoverable rows end -->
 
+            {{!-- <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-primary">
+                    <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav> --}}
+
+
 </div>
 <script src="assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <script src="assets/js/bootstrap.bundle.min.js"></script>
@@ -87,29 +98,23 @@
         }
     });
 
-    function filter(iAdminId, vAction, vPage) {
-        //var iUserUniqueId = $("#iUserUniqueId").val();
-        //var vFirstName = $("#vFirstName").val();
-        //var vEmail = $("#vEmail").val();
-        //var vPhone = $("#vPhone").val();
-        //var iAdminId = iAdminId;
-        //var vAction = vAction;
-        //var vPage = vPage;
+    function filter(iAdminIds, vActions, vPage) {
+        const searchInput = $("#search-input").val();
+        const iAdminId = iAdminIds;
+        const vAction = vActions;
+        var vPage = vPage;
 
         $("#table_record").html('');
-        $("#table_record").html('<tr><td colspan="12" style="text-align: center; vertical-align: middle;"><img src="/assets/vendors/svg-loaders/oval.svg" class="me-4" style="width: 4rem; margin: 10px;" alt="audio"></tr></td>')
+        $("#table_record").html('<tr class="text-center"><td colspan="12"><img src="/assets/vendors/svg-loaders/oval.svg" class="me-4" style="width: 4rem; margin: 10px;" alt="audio"></tr></td>')
 
         $.ajax({
             url: "/admin/ajax_listing",
             type: "POST",
             data: {
-                //iUserUniqueId:iUserUniqueId,
-                //vFirstName: vFirstName,
-                //vEmail: vEmail,
-                //vPhone: vPhone,
-                //iAdminId:iAdminId,
-                //vAction: vAction,
-                //vPage: vPage
+                searchInput:searchInput,
+                iAdminId:iAdminId,
+                vAction: vAction,
+                vPage: vPage
             },
             success: function (response) {
                 $("#table_record").html(response);
@@ -125,16 +130,17 @@
         filter("", "search", "");
     });
 
-    //$('.keyword').keyup(_.debounce(function () {
-    //    filter("", "search", "");
-    //}, 1000));
+    $('#search-input').keyup(_.debounce(function () {
+        filter("", "search", "");
+    }, 1000));
 
     $(document).on('change', '#eStatus', function () {
         filter("", "search", "");
     });
 
     $(document).on('click', '.delete', function () {
-        if (confirm('Are you sure to delete this record ?')) {
+        const res = confirm('Are you sure to delete this record ?');
+        if (res) {
             filter($(this).data("id"), "delete", "");
         }
     });
@@ -145,18 +151,19 @@
     });
 
     $(document).on('click', '#delete_btn', function () {
-        var iAdminId = [];
+        let iAdminId = [];
 
         $("input[name='iAdminId[]']:checked").each(function () {
             iAdminId.push($(this).val());
         });
 
-        var iAdminId = iAdminId.join(",");
+        iAdminId = iAdminId.join(",");
 
         if (iAdminId.length == 0) {
             alert('Please select records.')
         } else {
-            if (confirm('Are you sure delete this record?')) {
+            const res = confirm('Are you sure to delete this record ?');
+            if (res) {
                 filter(iAdminId, "multiple_delete", "");
             }
         }
