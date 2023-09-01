@@ -36,3 +36,16 @@
 </tr>
 {{/each}}
 
+{{#if_count userData}}
+{{#if_pagination datalimit dataCount}}
+<tr>
+    <td colspan="12" align="center">
+        {{{paginator.vPagination}}}
+    </td>
+</tr>
+{{/if_pagination}}
+{{else}}
+<tr class="text-center">
+    <td colspan="12">No Record Found</td>
+</tr>
+{{/if_count}}

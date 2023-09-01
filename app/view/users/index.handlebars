@@ -130,6 +130,11 @@
             }
         });
 
+        $(document).on('click', '.ajax_page', function () {
+            var vPage = $(this).data("id");
+            filter("", "search", vPage);
+        });
+
         $(document).on('click', '#delete_btn', function () {
             let iUsersId = [];
 
