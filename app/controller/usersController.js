@@ -1,6 +1,10 @@
 const path = require('path');
 const location = path.join(__dirname + '/../');
 const userModel = require('../model/usersModel');
+const Paginator = require("../library/PaginatorLibrary");
+const settingModal = require("../model/settingModel");
+
+
 const { Console } = require('console');
 const fs = require('fs')
 
@@ -22,7 +26,7 @@ exports.ajax_listing = async (req, res) => {
     if (req.session.email) {
         try {
 
-            let { iUserId, vAction, searchInput } = req.body
+            let { iUserId, vAction, searchInput, vPage } = req.body
 
             if (vAction === "search" || vAction === "delete" || vAction === "multiple_delete") {
 
@@ -51,11 +55,36 @@ exports.ajax_listing = async (req, res) => {
                     ];
                 }
 
+                //pagination
+                let companyData = await settingModal.findOne().exec();
+                vPage = 1;
+                let dataCount = await userModel.find().count();
+                let vItemPerPage = companyData.iItemPerPage;
+                let vCount = dataCount;
+
+                if (req.body.vPage != "") {
+                    vPage = req.body.vPage;
+                }
+
+                let criteria = {
+                    vPage: vPage,
+                    vItemPerPage: vItemPerPage,
+                    vCount: vCount,
+                };
+
+                let paginator = Paginator.pagination(criteria);
+                let start = (vPage - 1) * vItemPerPage;
+                let limit = vItemPerPage;
+
+
                 let userData = await userModel.find(searchSQL);
 
                 res.render("../view/users/ajax_listing", {
                     layout: false,
                     userData: userData,
+                    paginator: paginator,
+                    datalimit: limit,
+                    dataCount: dataCount,
                 });
             }
 

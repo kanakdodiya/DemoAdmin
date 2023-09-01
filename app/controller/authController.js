@@ -1,5 +1,9 @@
-const userModel = require("../model/authModel");
+const authModel = require("../model/authModel");
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+const handlebars = require('handlebars');
+const fs = require('fs');
+const nodemailer = require("nodemailer");
 
 exports.index = async (req, res) => {
     if (req.session.email) {
@@ -12,7 +16,7 @@ exports.index = async (req, res) => {
 exports.login_action = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const userData = await userModel.findOne({ 'email': email }).select('+password');
+        const userData = await authModel.findOne({ 'email': email }).select('+password');
 
         // Check if a user with the provided email exists
         if (!userData) {
@@ -74,7 +78,7 @@ exports.register_action = async (req, res) => {
                 }
             }
 
-            const updatedData = await userModel.findOneAndUpdate(
+            const updatedData = await authModel.findOneAndUpdate(
                 { _id: iAdminId },
                 UPDATE_QUERY,
                 { new: true } // To return the updated document
@@ -87,7 +91,7 @@ exports.register_action = async (req, res) => {
             const { username, email, password, confirmPassword, status, newAdmin } = req.body;
             if (password) {
                 if (password == confirmPassword) {
-                    const user = await userModel.create({
+                    const user = await authModel.create({
                         username,
                         email,
                         password,
@@ -151,12 +155,127 @@ exports.register_action = async (req, res) => {
 
 
 exports.forgotPassword = async (req, res) => {
-    res.render("../view/auth/auth-forgot-password", {})
+    try {
+        res.render("../view/auth/auth-forgot-password", {})
+    } catch (error) {
+        console.error('error: ', error);
+        return res.redirect("/forgot-password");
+
+    }
 }
 
 exports.forgotPassword_action = async (req, res) => {
-    res.render("../view/auth/auth-forgot-password", {})
+    try {
+        const email = req.body.email
+        const userData = await authModel.findOne({ 'email': email });
+
+        if (!userData) {
+            req.flash('error', 'Email Account Not Found');
+            return res.redirect("/register");
+        }
+
+        const verifyToken = uuid.v4();
+
+        await authModel.findOneAndUpdate(
+            { email: email },
+            { "$set": { verifyToken: verifyToken } },
+        );
+
+        let verifyLink = `http://localhost:9003/reset-password/${verifyToken}`;
+
+        const emailTemplate = fs.readFileSync(
+            "./app/view/email/index.handlebars",
+            "utf-8"
+        );
+
+        const template = handlebars.compile(emailTemplate)
+
+        const messageBody = template({
+            verifyLink: verifyLink
+        });
+
+        const transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: 'jaqueline87@ethereal.email',
+                pass: 'V8aUNQTKArUZY7cJwM'
+            }
+        });
+
+        (async function main() {
+            const info = await transporter.sendMail({
+                from: '"Fred Foo" <foo@example.com>', // sender address
+                to: "kanak@mailinator.com", // list of receivers
+                subject: "Verification", // Subject line
+                text: "Hello world", // plain text body
+                html: messageBody, // html body
+            });
+
+            if (info.messageId) {
+                req.flash('success', 'Email Send Successfully');
+                return res.redirect("/forgot-password");
+            }
+        })();
+        
+    } catch (error) {
+        console.error('error: ', error.message);
+        req.flash('error', 'Email Send Failed');
+        return res.redirect("/forgot-password");
+    }
 }
+
+
+exports.reset_password = async (req, res) => {
+    try {
+        let token = req.params.token;
+        let data = await authModel.findOne({ "verifyToken": token })
+
+        if (data) {
+            res.render("../view/auth/reset-password", { token: token })
+        }
+
+    } catch (error) {
+        console.error('error: ', error);
+        req.flash('error', 'Something Went Wrong');
+        return res.redirect("/forgot-password");
+    }
+
+}
+
+exports.reset_password_action = async (req, res) => {
+    const { password, confirmPassword, verifyToken } = req.body;
+    try {
+        if (password) {
+            if (password == confirmPassword) {
+
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(password, salt);
+
+
+                await authModel.findOneAndUpdate(
+                    { verifyToken: verifyToken },
+                    { "$set": { password: hashedPassword, verifyToken: '' } },
+                );
+
+                req.flash('success', 'Password Changed successfully');
+
+                return res.redirect('/login');
+
+            } else {
+                req.flash('error', 'Passwords do not match');
+                return res.redirect('/');
+            }
+        } else {
+            req.flash('error', 'Please Try Again');
+            return res.redirect('/forgot-password');
+        }
+    } catch (error) {
+        console.error('error: ', error);
+
+    }
+}
+
 
 exports.logout = (req, res) => {
     if (req.session.email) {

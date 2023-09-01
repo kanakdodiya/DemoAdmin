@@ -18,11 +18,11 @@ const adminSchema = new mongoose.Schema({
             }
         }
     },
-    image:{
-        type:String
+    image: {
+        type: String
     },
-    phone:{
-        type:Number
+    phone: {
+        type: Number
     },
     password: {
         type: String,
@@ -37,6 +37,10 @@ const adminSchema = new mongoose.Schema({
             }
 
         }
+    },
+    verifyToken: {
+        type: String,
+        default: ""
     },
     status: {
         type: String,
