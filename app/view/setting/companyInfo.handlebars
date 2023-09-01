@@ -6,7 +6,7 @@
             </div>
             <div class="card-content">
                 <div class="card-body">
-                    <form class="form" method="post" action="/general-setting/store-data" enctype = "multipart/form-data">
+                    <form class="form" method="post" action="/general-setting/store-data" enctype = "multipart/form-data" data-parsley-validate>
                         <div class="row">
                             <div class="col-md-6  col-12">
                                 <div class="form-group">
@@ -27,7 +27,7 @@
                              <div class="col-md-6 col-12">
                                 <div class="form-group">
                                     <label for="company-email">Company Email ID</label>
-                                    <input type="text" id="company-email" class="form-control"
+                                    <input type="email" id="company-email" class="form-control"
                                         value="{{data.vCompanyEmailId}}" placeholder="Company Email ID" name="companyEmail" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
                                        >
                                 </div>
