@@ -90,7 +90,7 @@
 
 
         function filter(iUsersId, vActions, vPage) {
-            const serchInput = $("#search-input").val();
+            const searchInput = $("#search-input").val();
             const iUserId = iUsersId;
             const vAction = vActions;
             //var vPage = vPage;
@@ -102,7 +102,7 @@
             $.ajax({
                 url: "/users/ajax_listing",
                 type: "POST",
-                data: { iUserId: iUserId, vAction: vAction, serchInput: serchInput },
+                data: { iUserId: iUserId, vAction: vAction, searchInput: searchInput },
                 success: function (response) {
                     $("#table_record").html(response);
                 },
