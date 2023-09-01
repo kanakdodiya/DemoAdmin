@@ -1,23 +1,74 @@
 const path = require('path');
 const location = path.join(__dirname + '/../');
-const UserDataSchema = require('../model/usersModel');
+const userModel = require('../model/usersModel');
 const { Console } = require('console');
-const fs  = require('fs')
+const fs = require('fs')
 
 exports.index = async (req, res) => {
     if (req.session.email) {
         try {
-            let data = await UserDataSchema.find();
             is_layout = true;
             res.render("../view/users/index", {
                 is_layout: is_layout,
-                data: data
             });
         } catch (error) {
             console.log('error: ', error);
         }
     } else {
         res.redirect("/");
+    }
+}
+exports.ajax_listing = async (req, res) => {
+    if (req.session.email) {
+        try {
+
+            let { iUserId, vAction, searchInput } = req.body
+
+            if (vAction === "search" || vAction === "delete" || vAction === "multiple_delete") {
+
+                if (vAction === "delete" && iUserId != null) {
+                    await userModel.findByIdAndDelete(iUserId);
+                }
+
+                if (vAction === "multiple_delete" && iUserId != null) {
+                    let userIDs = iUserId.split(',');
+
+                    await userModel.deleteMany({
+                        _id: {
+                            $in: userIDs
+                        }
+                    });
+                }
+
+                let searchSQL = {};
+                if (searchInput.length > 0) {
+                    let generalSearch = new RegExp(searchInput, "i");
+                    searchSQL.$or = [
+                        { vUserName: generalSearch },
+                        { vEmail: generalSearch },
+                        { iContact: generalSearch },
+                        { eStatus: new RegExp(searchInput) }
+                    ];
+                }
+
+                let userData = await userModel.find(searchSQL);
+
+                res.render("../view/users/ajax_listing", {
+                    layout: false,
+                    userData: userData,
+                });
+            }
+
+        } catch (error) {
+            console.error('error: ', error);
+            return res.status(500).send({
+                message: 'error!'
+            });
+
+        }
+
+    } else {
+        res.status(401).send("Unauthorized")
     }
 }
 
@@ -51,10 +102,10 @@ exports.addAction = async (req, res) => {
                     data.vAvatar = img_name;
                 }
 
-                await UserDataSchema.updateOne({ _id: req.body.id }, { $set: data });
+                await userModel.updateOne({ _id: req.body.id }, { $set: data });
                 action = 'updated';
-            } else {       
-                const data = new UserDataSchema({
+            } else {
+                const data = new userModel({
                     vUserName: req.body.vUserName,
                     vEmail: req.body.vEmail,
                     iContact: req.body.iContact,
@@ -108,7 +159,7 @@ exports.addAction = async (req, res) => {
 exports.editUser = async (req, res) => {
     if (req.session.email) {
         try {
-            const data = await UserDataSchema.findById({ _id: req.params.id });
+            const data = await userModel.findById({ _id: req.params.id });
             is_layout = true;
             res.render("../view/users/add", {
                 is_layout: is_layout,
@@ -127,7 +178,7 @@ exports.deleteUser = async (req, res) => {
     if (req.session.email) {
         try {
             const iUserId = req.params.id;
-            const deletedData = await UserDataSchema.findByIdAndDelete(iUserId);
+            const deletedData = await userModel.findByIdAndDelete(iUserId);
 
             if (deletedData) {
                 let dir = location + "upload/" + deletedData.vAvatar
