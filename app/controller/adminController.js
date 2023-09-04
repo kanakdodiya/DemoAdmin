@@ -1,6 +1,8 @@
 const authModel = require("../model/authModel");
 const Paginator = require("../library/PaginatorLibrary");
 const settingModal = require("../model/settingModel");
+const handlebars = require("handlebars");
+const fs = require("fs");
 
 exports.index = async (req, res) => {
   if (req.session.email) {
@@ -75,7 +77,7 @@ exports.ajax_listing = async (req, res) => {
         let limit = vItemPerPage;
         // End
 
-        let adminData = await authModel.find(searchSQL).sort({ _id: "desc" });
+        let adminData = await authModel.find(searchSQL).skip(start).limit(limit).sort({ _id: "desc" });
 
         res.render("../view/admin/ajax_listing", {
           layout: false,
@@ -142,4 +144,22 @@ exports.delete = async (req, res) => {
   } else {
     res.redirect("/");
   }
+};
+
+exports.test = async (req, res) => {
+  console.log("api");
+  // const emailTemplate = fs.readFileSync(path.join(__dirname, "/templates/index.handlebars"), "utf-8")
+  const emailTemplate = fs.readFileSync(
+    // "../view/email/index.handlebars",
+    "./app/view/email/index.handlebars",
+    "utf-8"
+  );
+
+  const template = handlebars.compile(emailTemplate)
+
+  const messageBody = template({
+    name: "David Islo",
+    interviewer: "Scott Greenwich",
+  });
+  // console.log('messageBody: ', messageBody);
 };
