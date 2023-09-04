@@ -3,7 +3,7 @@ module.exports = {
     var vPrevious = "Previous";
     var vNext = "Next";
     var vFirst = "First";
-    var vLast = "Prev";
+    var vLast = "Last";
     var vPage = "";
     var vItemPerPage = "";
     var vStart = "";
@@ -33,33 +33,20 @@ module.exports = {
     vPaginationTemplate =
       vPaginationTemplate + '<ul class="pagination pagination-primary">';
 
-    // Last Button Logic
-    if (parseInt(vPage) == parseInt(vPageCount)) {
-      //vPaginationTemplate = vPaginationTemplate + '<li class="page-item"><a class="page-link ajax_page " data-id="'+vPageCount+'" href="javascript:;">' + vLast + '</a></li>';
-    } else {
-      vPaginationTemplate =
-        vPaginationTemplate +
-        '<li class="page-item"><a class="page-link ajax_page " data-id="' +
-        vPageCount +
-        '" href="javascript:;">' +
-        vLast +
-        "</a></li>";
-    }
-
-    // First Button Logic
-    if (parseInt(vPage) == 1) {
-      // vPaginationTemplate = vPaginationTemplate + '<li class="page-item"><a class="page-link ajax_page " data-id="1" href="javascript:;">' + vFirst + '</a></li>';
-    } else {
-      vPaginationTemplate =
-        vPaginationTemplate +
-        '<li class="page-item"><a class="page-link ajax_page " data-id="1" href="javascript:;">' +
-        vFirst +
-        "</a></li>";
-    }
+    // // First Button Logic
+    // if (parseInt(vPage) == 1) {
+    //   // vPaginationTemplate = vPaginationTemplate + '<li class="ivu-page-item"><a class="ajax_page " data-id="1" href="javascript:;">' + vFirst + '</a></li>';
+    // } else {
+    //   vPaginationTemplate =
+    //     vPaginationTemplate +
+    //     '<li class="page-item"><a class="page-link ajax_page " data-id="1" href="javascript:;">'  +
+    //     vFirst +
+    //     "</a></li>";
+    // }
 
     // Previous Button Logic
     if (parseInt(vPage) == 1) {
-      //vPaginationTemplate = vPaginationTemplate + '<li class="page-item"><a class="page-link ajax_page " data-id="1" href="javascript:;">' + vPrevious + '</a></li>';
+      vPaginationTemplate = vPaginationTemplate + '<li class="page-item"><a class="page-link ajax_page " data-id="1" href="javascript:;">' + vPrevious + '</a></li>';
     } else {
       No = parseInt(vPage) - 1;
       vPaginationTemplate =
@@ -112,7 +99,7 @@ module.exports = {
 
     // Next Button Logic
     if (parseInt(vPage) == parseInt(vPageCount)) {
-      //vPaginationTemplate = vPaginationTemplate + '<li class="page-item"><a class="page-link ajax_page " data-id="'+vPageCount+'" href="javascript:;">' + vNext + '</a></li>';
+      vPaginationTemplate = vPaginationTemplate + '<li class="page-item"><a class="page-link ajax_page " data-id="'+vPageCount+'" href="javascript:;">' + vNext + '</a></li>';
     } else {
       if (parseInt(vPage) >= parseInt(vPageCount)) {
         No = parseInt(vPageCount);
@@ -135,7 +122,18 @@ module.exports = {
       }
     }
 
-    
+    // // Last Button Logic
+    // if (parseInt(vPage) == parseInt(vPageCount)) {
+    //   //vPaginationTemplate = vPaginationTemplate + '<li class="ivu-page-item"><a class="ajax_page " data-id="'+vPageCount+'" href="javascript:;">' + vLast + '</a></li>';
+    // } else {
+    //   vPaginationTemplate =
+    //     vPaginationTemplate +
+    //     '<li class="page-item"><a class="page-link ajax_page " data-id="' +
+    //     vPageCount +
+    //     '" href="javascript:;">' +
+    //     vLast +
+    //     "</a></li>";
+    // }
 
     vPaginationTemplate = vPaginationTemplate + "</ul>";
     vPaginationTemplate = vPaginationTemplate + "</nav>";

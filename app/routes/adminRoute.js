@@ -9,6 +9,8 @@ module.exports = (app) => {
     router.get("/add", adminController.add);
     router.get("/edit/:iAuthId", adminController.edit);
     router.get("/delete/:iAuthId", adminController.delete);
+
+    router.get("/test",adminController.test);
   
     app.use("/admin", router);
   };
