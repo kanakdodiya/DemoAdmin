@@ -1,0 +1,99 @@
+<style>
+    .send-button {
+        background-color: #527faf;
+        border: none;
+        margin-left: 5px;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 0 25px 25px 0;
+        cursor: pointer;
+    }
+
+    .chat-content {
+        max-height: 450px;
+         overflow-y: auto;
+        scrollbar-width: none;
+         -ms-overflow-style: none;
+    }
+
+    .chat-content::-webkit-scrollbar {
+        width: 2px;
+    }
+
+    .card-body {
+        position: relative;
+        background: #697c7e;
+        overflow: hidden;
+    }
+
+    .chat.chat-left .chat-message {
+        
+    }
+</style>
+
+<div class="card ">
+
+    <div class="card-header">
+        <div class="media d-flex align-items-center">
+            <div class="avatar me-3">
+                <img src="assets/images/faces/1.jpg" alt="" srcset="">
+                {{#if_equal userData.eOnline '1'}}
+                    <span class="avatar-status bg-success" id="{{userData.id}}-avtar"></span>
+                {{/if_equal}}
+
+                {{#if_equal userData.eOnline '0'}}
+                    <span class="avatar-status bg-danger" id="{{userData.id}}-avtar"></span>
+                {{/if_equal}}
+            </div>
+            <div class="name flex-grow-1">
+                <h6 class="mb-0">{{userData.username}}</h6>
+                {{#if_equal userData.eOnline '1'}}
+                    <span class="text-xs" id="{{userData.id}}-chat-status">Online</span>
+                {{/if_equal}}
+
+                {{#if_equal userData.eOnline '0'}}
+                    <span class="text-xs" id="{{userData.id}}-chat-status">Offline</span>
+                {{/if_equal}}
+                {{!-- <span class="text-xs">Online</span> --}}
+            </div>
+            <button class="btn btn-sm">
+                <i data-feather="x"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body pt-4 bg-grey">
+        <div class="chat-content ">
+            <div class="chat">
+                <div class="chat-body">
+                    <div class="chat-message">Hi Alfy, how can i help you?</div>
+                </div>
+            </div>
+            <div class="chat chat-left">
+                <div class="chat-body">
+                    <div class="chat-message">I'm looking for the best admin dashboard template</div>
+                    <div class="chat-message">With bootstrap certainly</div>
+                </div>
+            </div>
+            <div class="chat">
+                <div class="chat-body">
+                    <div class="chat-message">I recommend you to use Mazer Dashboard</div>
+                </div>
+            </div>
+            <div class="chat chat-left ">
+                <div class="chat-body">
+                    <div class="chat-message rounded">That"s great! I like it so much :)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="message-form d-flex flex-direction-column align-items-center">
+            <a href="http://" class="black"><i data-feather="smile"></i></a>
+            <div class="d-flex flex-grow-1 ml-4">
+                <input type="text" class="form-control text-chat" placeholder="Type your message..">
+            </div>
+            <button class="send-button" id="submitBtn" type="button">send</button>
+
+        </div>
+    </div>
+</div>

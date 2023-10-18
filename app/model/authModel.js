@@ -46,6 +46,10 @@ const adminSchema = new mongoose.Schema({
         type: String,
         enum: ['active', 'inactive'],
         default: 'active' // Set a default value if needed
+    },
+    eOnline: {
+        type: String,
+        default: '0'
     }
 }, {
     timestamps: true, // Enable timestamps

@@ -1,0 +1,146 @@
+<link rel="stylesheet" href="/assets/css/widgets/chat.css">
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+<div class="page-heading">
+
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3>Chatbox</h3>
+                <p class="text-subtitle text-muted">For user to check they list</p>
+            </div>
+            <div class="col-12 col-md-6 order-md-2 order-first">
+                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Chatbox</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        WhatsApp
+                    </div>
+                </div>
+                <ul class="list-group col-md-8">
+                    {{#each users as |value key|}}
+                    <li class="list-group-item d-flex justify-content-between align-items-center users-{{key}} users-list"
+                        data-id="{{value.id}}">
+                        {{value.username}}
+                        {{!-- <span class="avatar-status bg-success"></span> --}}
+                        {{#if_equal eOnline '1'}}
+                        <span class=" p-2 bg-success border border-light rounded-circle" id="{{value.id}}-user-status">
+                        {{/if_equal}}
+
+                        {{#if_equal eOnline '0'}}
+                        <span class=" p-2 bg-danger border border-light rounded-circle" id="{{value.id}}-user-status">
+                        {{/if_equal}}
+
+                    </li>
+                    {{/each}}
+
+                </ul>
+            </div>
+
+            <div class="col-md-6 chat-box-listing">
+                <div class="card ">
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script>
+
+    var sender_id = '{{session.userId}}'    
+    // if work with front -back send jwt token to authenticate
+    var socket = io({
+        auth:{
+            token: sender_id
+        }
+    });
+    
+    $('.users-list').on('click', function () {
+        let id = $(this).data('id');
+        listing(id);
+    })
+
+    $(document).ready(function () {
+        let fUser = $('.users-0').data('id');
+        listing(fUser);
+
+    })
+
+    //send msg
+    $(document).on('click', '#submitBtn', function () {
+        let value = $('.text-chat').val();
+        if (value) {
+            value = value.trim();
+            socket.emit('chat message', value);
+            $('.text-chat').val('');
+
+            var item = `<div class="chat">
+                <div class="chat-body">
+                    <div class="chat-message">${value}</div>
+                </div>
+            </div>`
+            $('.chat-content').append(item);
+            $(".chat-content").animate({ scrollTop: $('.chat-content').prop("scrollHeight")}, 1000);
+        }
+    });
+
+    socket.on('getUserOnline', function(data){
+        console.log("test datat ", data)
+        let userId = '#'+data.userId+'-user-status';
+        let chatListId = '#'+data.userId+'-avtar';
+        $(`${userId}, ${chatListId}`).removeClass('bg-danger');
+        $(`${userId}, ${chatListId}`).addClass('bg-success');
+        $('#'+data.userId+'-chat-status').html('Online');
+       // $('#'data.userId+'-avtar').html('Online');
+    });
+
+    socket.on('getUserOffline', function(data){
+        console.log("test datat ", data)
+        let userId = '#'+data.userId+'-user-status';
+        let chatListId = '#'+data.userId+'-avtar';
+        $(`${userId}, ${chatListId}`).removeClass('bg-success');
+        $(`${userId}, ${chatListId}`).addClass('bg-danger');
+        $('#'+data.userId+'-chat-status').html('Offline');
+    });
+
+    socket.on('chat message', function (msg) {
+        var item = `<div class="chat">
+                <div class="chat-body">
+                    <div class="chat-message">${msg}</div>
+                </div>
+            </div>`
+        $('.chat-content').append(item);
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    function listing(id) {
+        $.ajax({
+            url: "/chat/ajax_listing",
+            type: "POST",
+            data: {
+                iAdminId: id,
+            },
+            success: function (response) {
+                $(".chat-box-listing").html(response);
+            },
+            error: function (error) {
+                //notification_error("Somthing went wrong!")
+                //window.location = '/'
+            }
+        });
+    }
+
+</script>

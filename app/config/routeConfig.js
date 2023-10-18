@@ -5,6 +5,7 @@ module.exports = app => {
     require("../routes/userRoute")(app);
     require("../routes/systemEmailRoute")(app);
     require("../routes/settingRoute")(app);
+    require("../routes/chatRoute")(app)
     
     app.all('*',(req,res) => {
         res.render('../view/error/404.handlebars',{})

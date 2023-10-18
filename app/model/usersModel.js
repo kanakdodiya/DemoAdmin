@@ -23,8 +23,11 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['Active', 'Inactive'],
         default: 'Active'
+    },
+    eOnline: {
+        type: String,
+        default: '0'
     }
-   
 });
 
 const UserData = mongoose.model('users', UserSchema);
